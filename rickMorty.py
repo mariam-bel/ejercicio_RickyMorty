@@ -23,46 +23,37 @@ def genero(personaje):
     return personaje["gender"]
 
 def origen(personaje):
+    return personaje["origin"]["name"]
+
+def localizacon(personaje):
     return personaje["location"]["name"]
 
-localizacion = valores[6]
-loc = localizacion["name"]
+def imagen(personaje):
+    return personaje["image"]
 
-def letrasAdivinadas(palabra, letras):
-    nueva = ""
-    for i in range(len(palabra)):
-        if palabra[i] in letras:
-            nueva += palabra[i]
-        elif palabra[i] == " ":
-            nueva += " "
-        else:
-            nueva += "_"
-    return nueva
+print(claves)
+print(valores)
 
-"""
-urllo = valores[6]["url]
-localizacionRequest = requests.get(urllo)
-localizacion = localizacionRequest.json()
-print(f"localizacion: {localizacion["name"]}")
-"""
-nombreO = personaje["name"].lower()
-print(f"[{nombreO}]")
+nombre = personaje["name"].lower().capitalize()
+print(f"{nombre}")
 continuar = True
-letras = []
-print(letrasAdivinadas(nombreO,letras))
+cont = 1
 while continuar:
-    nombre = input("Adivina el nombre del personaje:\n").lower()
-    if nombre == nombreO:
+    print("Adivina el nombre del personaje (tienes tres intentos)")
+    intento = input(f"Intento {cont}:\n").lower().capitalize()
+    if intento == nombre:
         print("¡Enhorabuena!")
         continuar = False
     else:
-        for i in range(len(nombre)):
-            if nombre[i] == nombreO[i]:
-                letras.append(nombre[i])
-        print(letrasAdivinadas(nombreO, letras))
-        print(f"El personaje está: {estaVivo(personaje)}")
-        print(f"La especie del personaje: {especie(personaje)}")
-        print(f"El género del personaje es: {genero(personaje)}")
-        print(f"El lugar de origen del personaje es: {origen(personaje)}")
-
-print(f"El nombre es: {personaje['name']}")
+        if cont == 1:
+            print(f"El personaje está: {estaVivo(personaje)}")
+            print(f"La especie del personaje es: {especie(personaje)}")
+            print(f"El género del personaje es: {genero(personaje)}")
+        elif cont == 2:
+            print(f"El lugar de origen del personaje es: {origen(personaje)}")
+            print(f"La localización del personaje es: {localizacon(personaje)}")
+            print(f"Aquí tienes una imagen del personaje: {imagen(personaje)}")
+        else:
+            print(f"Has perdido.\nEl nombre es: {personaje['name']}")
+            continuar = False
+        cont+=1
